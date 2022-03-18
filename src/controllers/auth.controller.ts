@@ -22,7 +22,7 @@ export async function signUp(req:Request, res:Response){
         })
     }
 
-    const username = await connect.query('SELECT * FROM users WHERE correo = ?', [newUser.username]);
+    const username = await connect.query('SELECT * FROM users WHERE username = ?', [newUser.username]);
     if(username.length > 0){
         return res.status(404).json({
             success: false,
@@ -30,7 +30,7 @@ export async function signUp(req:Request, res:Response){
         });
     }else{
         newUser.password = await encryptPassword(newUser.password);
-        await connect.query('INSERT INTO usuarios SET ?', [newUser]);
+        await connect.query('INSERT INTO users SET ?', [newUser]);
         
         return res.status(201).json({
             success: true,
