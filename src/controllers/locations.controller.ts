@@ -3,8 +3,8 @@ import {Request, Response} from 'express';
 import { Location } from '../interfaces/location.interface';
 
 export async function getLocations(res: Response): Promise<Response>{
-    const locations: Location = await connect.query('SELECT * FROM locations ORDER BY id DESC');
-    if(locations.id){
+    const locations: Array<Location> = await connect.query('SELECT * FROM locations ORDER BY id DESC');
+    if(locations.length > 0){
         return res.status(200).json(locations);
     }else{
         return res.status(404).json({
@@ -16,9 +16,9 @@ export async function getLocations(res: Response): Promise<Response>{
 
 export async function getLocation(req:Request, res: Response): Promise<Response>{
     const id = req.params.locationId
-    const character: Location = await connect.query('SELECT * FROM locations WHERE id = ?', [id]);
-    if(character.id){
-        return res.status(200).json(character);
+    const location: Array<Location> = await connect.query('SELECT * FROM locations WHERE id = ?', [id]);
+    if(location){
+        return res.status(200).json(location);
     }else{
         return res.status(404).json({
             success: false,
@@ -72,7 +72,7 @@ export async function deleteLocation(req:Request, res: Response){
 export async function searchLocations(req:Request, res: Response){
     const { field } = req.body;
     const findLocations: Location = await connect.query("SELECT * FROM locations WHERE name LIKE CONCAT('%', ? , '%') ORDER BY id DESC", [field]);
-    if(findLocations.id){
+    if(findLocations){
         return res.status(200).json(findLocations);
     }else{
         return res.status(404).json({

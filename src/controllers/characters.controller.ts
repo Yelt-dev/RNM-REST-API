@@ -2,9 +2,9 @@ import connect from '../database/connection';
 import {Request, Response} from 'express';
 import { Character } from '../interfaces/character.interface';
 
-export async function getCharacters(res: Response): Promise<Response>{
-    const characters: Character = await connect.query('SELECT * FROM characters ORDER BY id DESC');
-    if(characters.id){
+export async function getCharacters(req:Request, res: Response): Promise<Response>{
+    const characters: Array<Character> = await connect.query('SELECT * FROM characters ORDER BY id DESC');
+    if(characters.length > 0){
         return res.status(200).json(characters);
     }else{
         return res.status(404).json({
@@ -16,8 +16,8 @@ export async function getCharacters(res: Response): Promise<Response>{
 
 export async function getCharacter(req:Request, res: Response): Promise<Response>{
     const id = req.params.characterId
-    const character: Character = await connect.query('SELECT * FROM characters WHERE id = ?', [id]);
-    if(character.id){
+    const character: Array<Character> = await connect.query('SELECT * FROM characters WHERE id = ?', [id]);
+    if(character.length > 0){
         return res.status(200).json(character);
     }else{
         return res.status(404).json({
@@ -72,7 +72,7 @@ export async function deleteCharacter(req:Request, res: Response){
 export async function searchCharacter(req:Request, res: Response){
     const { field } = req.body;
     const findCharacters: Character = await connect.query("SELECT * FROM characters WHERE name LIKE CONCAT('%', ? , '%') ORDER BY id DESC", [field]);
-    if(findCharacters.id){
+    if(findCharacters){
         return res.status(200).json(findCharacters);
     }else{
         return res.status(404).json({

@@ -6,8 +6,8 @@ import { encryptPassword, matchPassword } from '../lib/encrypter';
 
 
 export async function getUsers(res: Response): Promise<Response>{
-    const users: User = await connect.query('SELECT * FROM users ORDER BY id ASC');
-    if(users.id){
+    const users: Array<User> = await connect.query('SELECT * FROM users ORDER BY id ASC');
+    if(users.length > 0){
         return res.status(200).json(users);
     }else{
         return res.status(404).json({
@@ -19,8 +19,8 @@ export async function getUsers(res: Response): Promise<Response>{
 
 export async function getUser(req:Request, res: Response): Promise<Response>{
     const id = req.params.userId;
-    const user: User = await connect.query('SELECT * FROM users WHERE id = ?', [id]);
-    if(user.id){
+    const user: Array<User> = await connect.query('SELECT * FROM users WHERE id = ?', [id]);
+    if(user.length > 0){
         return res.status(200).json(user);
     }else{
         return res.status(404).json({
