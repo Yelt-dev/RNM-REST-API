@@ -1,15 +1,14 @@
 import {Request, Response, NextFunction} from 'express';
 import connect from '../database/connection';
-import { User } from '../interfaces/user.interface';
 
 export const checkRole = (roles:Array<number>) => {
 
-    return async (res:Response, next:NextFunction) => {
+    return async (req:Request, res:Response, next:NextFunction) => {
         const { id } = res.locals.jwtPayload;
         try {
-            const user: User = await connect.query('SELECT * FROM users WHERE id = ?', [id]);
-            if(user.id){
-                const { role } = user;
+            const user = await connect.query('SELECT * FROM users WHERE id = ?', [id]);
+            if(user.length > 0){
+                const { role } = user[0];
                 if(roles.includes(role)){
                     next();
                 }else{
