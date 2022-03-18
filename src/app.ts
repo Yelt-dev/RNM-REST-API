@@ -12,6 +12,7 @@ import OrdersRoutes from "./routes/orders.routes";
 ;
 import UsersRoutes from "./routes/users.routes";
 import AuthRoutes from "./routes/auth.routes";*/
+import CategoriesRoutes from "./routes/categories.routes"
 import IndexRoutes  from "./routes/index.routes";
 import express, {Application} from "express";
 import helmet from "helmet";
@@ -45,6 +46,7 @@ export class  App {
 
     routes(){
         this.app.use('/rnm/api', IndexRoutes);
+        this.app.use('/rnm/api/categories', CategoriesRoutes)
         /*this.app.use('/api/products', ProductsRoutes);
         this.app.use('/api/data-products', DataProductsRoutes);
         this.app.use('/api/products-categories', ProductsCategoriesRoutes);
