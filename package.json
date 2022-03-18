@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc",
-    "dev": "cross-env nodemon src/index.ts --exec ts-node"
+    "dev": "nodemon src/index.ts --exec ts-node"
   },
   "keywords": [],
   "author": "",
