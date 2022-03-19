@@ -14,10 +14,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.searchCharacter = exports.deleteCharacter = exports.updateChacacter = exports.newCharacter = exports.getCharacter = exports.getCharacters = void 0;
 const connection_1 = __importDefault(require("../database/connection"));
-function getCharacters(res) {
+function getCharacters(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         const characters = yield connection_1.default.query('SELECT * FROM characters ORDER BY id DESC');
-        if (characters.id) {
+        if (characters.length > 0) {
             return res.status(200).json(characters);
         }
         else {
@@ -33,7 +33,7 @@ function getCharacter(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         const id = req.params.characterId;
         const character = yield connection_1.default.query('SELECT * FROM characters WHERE id = ?', [id]);
-        if (character.id) {
+        if (character.length > 0) {
             return res.status(200).json(character);
         }
         else {
@@ -94,7 +94,7 @@ function searchCharacter(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         const { field } = req.body;
         const findCharacters = yield connection_1.default.query("SELECT * FROM characters WHERE name LIKE CONCAT('%', ? , '%') ORDER BY id DESC", [field]);
-        if (findCharacters.id) {
+        if (findCharacters) {
             return res.status(200).json(findCharacters);
         }
         else {

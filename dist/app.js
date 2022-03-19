@@ -42,7 +42,7 @@ class App {
         this.app.use((0, helmet_1.default)());
     }
     routes() {
-        this.app.use('/rnm/api', index_routes_1.default);
+        this.app.use('/', index_routes_1.default);
         this.app.use('/rnm/api/categories', categories_routes_1.default);
         this.app.use('/rnm/api/characters', characters_routes_1.default);
         this.app.use('/rnm/api/locations', locations_routes_1.default);

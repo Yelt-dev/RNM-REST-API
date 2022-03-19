@@ -14,11 +14,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.searchCategory = exports.deleteCategory = exports.updateCategory = exports.newCategory = exports.getCategory = exports.getCategories = void 0;
 const connection_1 = __importDefault(require("../database/connection"));
-function getCategories(res) {
+function getCategories(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         const categories = yield connection_1.default.query('SELECT * FROM categories ORDER BY id DESC');
-        if (categories.id) {
-            return res.status(200).json(categories);
+        if (categories.length > 0) {
+            return res.json(categories);
         }
         else {
             return res.status(404).json({
@@ -33,7 +33,7 @@ function getCategory(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         const id = req.params.categoryId;
         const category = yield connection_1.default.query('SELECT * FROM categories WHERE id = ?', [id]);
-        if (category.id) {
+        if (category.length > 0) {
             return res.status(200).json(category);
         }
         else {
@@ -49,10 +49,10 @@ function newCategory(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         const newCategory = req.body;
         const sendCategory = {
-            nombre: newCategory.name,
-            descripcion: newCategory.description
+            name: newCategory.name,
+            description: newCategory.description
         };
-        if (!(sendCategory.nombre && sendCategory.descripcion)) {
+        if (!(sendCategory.name && sendCategory.description)) {
             return res.status(400).json({
                 success: false,
                 message: 'Nombre, descripcion de categoría son requeridos'
@@ -92,8 +92,8 @@ exports.deleteCategory = deleteCategory;
 function searchCategory(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         const { field } = req.body;
-        const findCategories = yield connection_1.default.query("SELECT * FROM categorias WHERE name LIKE CONCAT('%', ? , '%') ORDER BY id DESC", [field]);
-        if (findCategories.id) {
+        const findCategories = yield connection_1.default.query("SELECT * FROM categories WHERE name LIKE CONCAT('%', ? , '%') ORDER BY id DESC", [field]);
+        if (findCategories) {
             return res.status(200).json(findCategories);
         }
         else {

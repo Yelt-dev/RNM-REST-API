@@ -14,10 +14,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.searchLocations = exports.deleteLocation = exports.updateLocation = exports.newLocation = exports.getLocation = exports.getLocations = void 0;
 const connection_1 = __importDefault(require("../database/connection"));
-function getLocations(res) {
+function getLocations(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         const locations = yield connection_1.default.query('SELECT * FROM locations ORDER BY id DESC');
-        if (locations.id) {
+        if (locations.length > 0) {
             return res.status(200).json(locations);
         }
         else {
@@ -32,9 +32,9 @@ exports.getLocations = getLocations;
 function getLocation(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         const id = req.params.locationId;
-        const character = yield connection_1.default.query('SELECT * FROM locations WHERE id = ?', [id]);
-        if (character.id) {
-            return res.status(200).json(character);
+        const location = yield connection_1.default.query('SELECT * FROM locations WHERE id = ?', [id]);
+        if (location) {
+            return res.status(200).json(location);
         }
         else {
             return res.status(404).json({
@@ -94,7 +94,7 @@ function searchLocations(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         const { field } = req.body;
         const findLocations = yield connection_1.default.query("SELECT * FROM locations WHERE name LIKE CONCAT('%', ? , '%') ORDER BY id DESC", [field]);
-        if (findLocations.id) {
+        if (findLocations) {
             return res.status(200).json(findLocations);
         }
         else {

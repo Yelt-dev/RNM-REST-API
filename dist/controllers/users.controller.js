@@ -16,10 +16,10 @@ exports.deleteUser = exports.updateUserPassword = exports.getUser = exports.getU
 const connection_1 = __importDefault(require("../database/connection"));
 const express_validator_1 = require("express-validator");
 const encrypter_1 = require("../lib/encrypter");
-function getUsers(res) {
+function getUsers(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         const users = yield connection_1.default.query('SELECT * FROM users ORDER BY id ASC');
-        if (users.id) {
+        if (users.length > 0) {
             return res.status(200).json(users);
         }
         else {
@@ -35,7 +35,7 @@ function getUser(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         const id = req.params.userId;
         const user = yield connection_1.default.query('SELECT * FROM users WHERE id = ?', [id]);
-        if (user.id) {
+        if (user.length > 0) {
             return res.status(200).json(user);
         }
         else {
