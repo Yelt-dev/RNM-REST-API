@@ -33,7 +33,7 @@ export class  App {
     }
 
     routes(){
-        this.app.use('/rnm/api', IndexRoutes);
+        this.app.use('/', IndexRoutes);
         this.app.use('/rnm/api/categories', CategoriesRoutes);
         this.app.use('/rnm/api/characters', CharactersRoutes);
         this.app.use('/rnm/api/locations', LocationsRoutes);
