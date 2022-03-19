@@ -5,7 +5,7 @@ import { validationResult } from 'express-validator';
 import { encryptPassword, matchPassword } from '../lib/encrypter';
 
 
-export async function getUsers(res: Response): Promise<Response>{
+export async function getUsers(req: Request, res: Response): Promise<Response>{
     const users: Array<User> = await connect.query('SELECT * FROM users ORDER BY id ASC');
     if(users.length > 0){
         return res.status(200).json(users);
