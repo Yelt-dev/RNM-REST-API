@@ -2,7 +2,7 @@ import connect from '../database/connection';
 import {Request, Response} from 'express';
 import { Location } from '../interfaces/location.interface';
 
-export async function getLocations(res: Response): Promise<Response>{
+export async function getLocations(req: Request, res: Response): Promise<Response>{
     const locations: Array<Location> = await connect.query('SELECT * FROM locations ORDER BY id DESC');
     if(locations.length > 0){
         return res.status(200).json(locations);
