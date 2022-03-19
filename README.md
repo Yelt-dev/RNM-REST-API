@@ -1,5 +1,5 @@
 # Rick And Morty Multiverse REST API
-![Logo](public/rick_console.png "Logo")
+![Logo](./src/public/rick_console.png "Logo")
 
 ## Descrición
 RNMM REST API es un sistema backend para poder organizar toda la información de los personajes y locaciones que existen en los multiversos. El sistema tiene mecanismos de seguridad como encripación de contraseñas, roles de usuarios, acceso restringido y mas.
