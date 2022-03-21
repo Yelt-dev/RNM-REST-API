@@ -54,6 +54,8 @@ Tambien es posible con el rol de administrator crear mas usuarios y asignarles u
 
 ## Endpoints principales
 
+### NOTA IMPORTANTE: agregar al header de cada petición el campo `authorization` seguido del valor que es el token devuelto al autenticarse.
+
 Como es común en peticiones http para realizar las diferentes acciones sobre los datos se siguen usando los siguientes metodos:
 
 * POST : incersión
@@ -62,8 +64,6 @@ Como es común en peticiones http para realizar las diferentes acciones sobre lo
 * GET: lectura
 
 ### Locaciones
-
-### NOTA IMPORTANTE: agregar al header de cada petición el campo `authorization` seguido del valor que es el token devuelto al autenticarse.
 
 GET : `/rnm/api/locations` para traer tidos los registros o `/rnm/api/locations/5` añadiendo al final el `id` de la locación especifica en caso de querer consultar individualmente.
 
