@@ -63,7 +63,9 @@ Como es común en peticiones http para realizar las diferentes acciones sobre lo
 
 ### Locaciones
 
-GET : `/rnm/api/locations` para traer tidis los registros o `/rnm/api/locations/5` añadiendo al final el `id` de la locación especifica en caso de querer consultar individualmente.
+### NOTA IMPORTANTE: agregar al header de cada petición el campo `authorization` seguido del valor que es el token devuelto al autenticarse.
+
+GET : `/rnm/api/locations` para traer tidos los registros o `/rnm/api/locations/5` añadiendo al final el `id` de la locación especifica en caso de querer consultar individualmente.
 
 PUT : `/rnm/api/locations/5` añadiendo al final el `id` de la locación y ademas añadiendo el campo a modificar al body del request. Eje. `{ "name" : "nuevo"}`.
 
